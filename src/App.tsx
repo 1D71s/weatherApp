@@ -10,6 +10,7 @@ function App() {
   const [sity, setSity] = useState('Kyiv')
 
   const loading = useAppSelector(state => state.todos.loading)
+  const info = useAppSelector(state => state.todos.wetherSity)
 
 
   const dispatch = useAppDispatch()
@@ -17,10 +18,6 @@ function App() {
   const getWeather = () => {
     dispatch(fetchWeather(sity))
   }
-
-  /*useEffect(() => {
-    getWeather()
-  }, [])*/
 
 
   return (
@@ -30,7 +27,7 @@ function App() {
 
       {loading === true && <div>Load...</div>}
 
-      <WeatherItem/>
+      {info && <WeatherItem/>}
     </div>
   );
 }

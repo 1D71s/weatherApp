@@ -2,18 +2,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_KEY = '713773961dbe7e3002728dd63422e077'
 
+interface Sys {
+    country: string;
+    sunset: number;
+}
+
+interface Main {
+    temp: number;
+    pressure: number;
+}
+
 interface WeatherData {
     name: string;
     weather: { description: string }[];
+    sys: Sys;
+    main: Main
 }
 
 interface Todos {
-    wetherSity: WeatherData;
+    wetherSity: WeatherData | null;
     loading: boolean
 }
 
+
 const initialState: Todos = {
-    wetherSity: {name: '', weather: [{ description: '' }]},
+    wetherSity: null,
     loading: false
 }
 
