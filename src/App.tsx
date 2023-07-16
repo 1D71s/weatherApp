@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import './style.css';
-import { useAppDispatch } from './hooks';
+import { useAppDispatch, useAppSelector } from './hooks';
 import { fetchWeather } from './store/mySlice';
+import WeatherItem from './components/weatherItem/weatherItem';
 
 
 function App() {
 
-  const [sity, setSity] = useState('')
+  const [sity, setSity] = useState('Kyiv')
+
+  const loading = useAppSelector(state => state.todos.loading)
+
 
   const dispatch = useAppDispatch()
 
@@ -14,11 +18,19 @@ function App() {
     dispatch(fetchWeather(sity))
   }
 
+  /*useEffect(() => {
+    getWeather()
+  }, [])*/
+
 
   return (
     <div className="App">
       <input type="text" onChange={(e) => setSity(e.target.value)}/>
       <button onClick={getWeather}>find</button>
+
+      {loading === true && <div>Load...</div>}
+
+      <WeatherItem/>
     </div>
   );
 }

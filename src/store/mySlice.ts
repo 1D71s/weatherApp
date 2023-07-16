@@ -2,18 +2,24 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_KEY = '713773961dbe7e3002728dd63422e077'
 
+interface WeatherData {
+    name: string;
+    weather: { description: string }[];
+}
+
 interface Todos {
-    wetherSity: string;
+    wetherSity: WeatherData;
     loading: boolean
 }
 
 const initialState: Todos = {
-    wetherSity: '',
+    wetherSity: {name: '', weather: [{ description: '' }]},
     loading: false
 }
 
 
-export const fetchWeather = createAsyncThunk<string, string, {rejectValue: string}>(
+
+export const fetchWeather = createAsyncThunk<WeatherData, string, {rejectValue: string}>(
     'todos/fetchWeather',
     async function(sity, {rejectWithValue}) {
 
