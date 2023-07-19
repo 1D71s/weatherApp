@@ -7,8 +7,14 @@ interface Sys {
     sunset: number;
 }
 
+interface Wind {
+    speed: number;
+}
+
 interface Main {
     temp: number;
+    temp_min: number;
+    temp_max: number;
     pressure: number;
 }
 
@@ -16,7 +22,8 @@ interface WeatherData {
     name: string;
     weather: { description: string }[];
     sys: Sys;
-    main: Main
+    main: Main;
+    wind: Wind;
 }
 
 interface Todos {

@@ -3,7 +3,7 @@ import './style.css';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { fetchWeather } from './store/mySlice';
 import WeatherItem from './components/weatherItem/weatherItem';
-
+import LoaderSpiner from './components/loader/Loader';
 
 function App() {
 
@@ -21,13 +21,17 @@ function App() {
 
 
   return (
-    <div className="App">
-      <input type="text" onChange={(e) => setSity(e.target.value)}/>
-      <button onClick={getWeather}>find</button>
+    <div className="container">
+      <div className='search'>
+        <input className='search-input' type="text" onChange={(e) => setSity(e.target.value)} placeholder='sity'/>
+        <button className='search-btn' onClick={getWeather}>search</button>
+      </div>
 
-      {loading === true && <div>Load...</div>}
-
-      {info && <WeatherItem/>}
+      {loading === true && <div>
+          <LoaderSpiner/>
+        </div>}
+      
+      {(info && !loading) && <WeatherItem/>}
     </div>
   );
 }
