@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction, AnyAction } from "@reduxjs/toolkit";
 
 const API_KEY = '713773961dbe7e3002728dd63422e077'
 
@@ -28,13 +28,15 @@ interface WeatherData {
 
 interface Todos {
     wetherSity: WeatherData | null;
-    loading: boolean
+    loading: boolean;
+    error: string | null
 }
 
 
 const initialState: Todos = {
     wetherSity: null,
-    loading: false
+    loading: false,
+    error: null
 }
 
 
@@ -64,13 +66,22 @@ const todoSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchWeather.pending, (state) => {
+                state.wetherSity = null
                 state.loading = true
             })
             .addCase(fetchWeather.fulfilled, (state, action) => {
                 state.loading = false
                 state.wetherSity = action.payload
             })
+            .addMatcher(isError, (state, action: PayloadAction<string>) => {
+                state.error = action.payload;
+                state.loading = false
+            })
     }
 })
 
 export default todoSlice.reducer
+
+function isError(action: AnyAction) {
+    return action.type.endsWith('rejected')
+}

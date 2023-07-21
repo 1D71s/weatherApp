@@ -7,18 +7,17 @@ import LoaderSpiner from './components/loader/Loader';
 
 function App() {
 
-  const [sity, setSity] = useState('Kyiv')
+  const [sity, setSity] = useState('')
 
   const loading = useAppSelector(state => state.todos.loading)
   const info = useAppSelector(state => state.todos.wetherSity)
-
+  const error = useAppSelector(state => state.todos.error)
 
   const dispatch = useAppDispatch()
 
   const getWeather = () => {
     dispatch(fetchWeather(sity))
   }
-
 
   return (
     <div className="container">
@@ -32,6 +31,8 @@ function App() {
         </div>}
       
       {(info && !loading) && <WeatherItem/>}
+
+      {(error && !info && !loading) && <div>Something went wrong...</div>}
     </div>
   );
 }
